@@ -33,12 +33,12 @@ npm install
 
 ### 启动开发服务器
 ```bash
-npm start
+npm run dev
 ```
 
 ### 构建生产版本
 ```bash
-npm build
+npm run build
 ```
 
 ## 📖 使用指南
