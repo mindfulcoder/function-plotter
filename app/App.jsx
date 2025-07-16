@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useRef, useEffect } from 'react';
 import FunctionInput from './components/FunctionInput.jsx';
 import AxisControls from './components/AxisControls.jsx';
