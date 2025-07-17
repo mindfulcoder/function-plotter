@@ -2,6 +2,8 @@
 
 一个基于React的交互式数学函数图像绘制工具，支持多函数同时绘制、自定义坐标轴单位和智能标签显示。
 
+[在线预览](https://mindfulcoder.github.io/function-plotter/)
+
 ![](./plot.png)
 
 ## 🌟 功能特性
