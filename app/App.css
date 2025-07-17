@@ -5,12 +5,25 @@
   font-family: Arial, sans-serif;
 }
 
+@media (max-width: 768px) {
+  .function-plotter {
+    padding: 10px;
+  }
+}
+
 h1 {
   text-align: center;
   color: #333;
   margin-bottom: 30px;
   font-size: 2.5em;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
 }
 
 .input-form {
@@ -76,9 +89,25 @@ h1 {
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .canvas-container {
+    margin: 15px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 canvas {
   display: block;
   background-color: white;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  canvas {
+    min-width: 600px; /* 保持最小宽度以确保图表可读性 */
+  }
 }
 
 .examples {
@@ -185,36 +214,146 @@ canvas {
   opacity: 0.6;
 }
 
+.axis-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.axis-group {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .axis-controls {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* 移动端适配 */
 @media (max-width: 768px) {
   .input-group {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
   }
   
   .input-group label {
     min-width: auto;
     margin-bottom: 5px;
+    margin-right: 0;
+    font-size: 14px;
   }
   
-  .canvas-container {
-    overflow-x: auto;
+  .input-group input {
+    font-size: 16px; /* 防止iOS缩放 */
+    min-width: auto;
+  }
+  
+  .input-group button {
+    font-size: 16px;
+    padding: 12px 16px; /* 增大触摸区域 */
+    margin-top: 5px;
   }
   
   .example-buttons {
     justify-content: center;
   }
   
+  .example-buttons button {
+    padding: 10px 15px; /* 增大触摸区域 */
+    font-size: 16px;
+  }
+  
   .function-item {
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
+    gap: 10px;
+    padding: 15px;
   }
   
   .function-input {
     min-width: auto;
+    font-size: 16px; /* 防止iOS缩放 */
   }
   
   .color-picker {
     align-self: flex-start;
+    width: 50px;
+    height: 40px; /* 增大触摸区域 */
+  }
+  
+  .remove-button {
+    padding: 10px 15px; /* 增大触摸区域 */
+    font-size: 16px;
+  }
+  
+  .functions-list {
+    margin: 15px 0;
+    padding: 10px;
+  }
+  
+  .function-checkbox {
+    width: 20px;
+    height: 20px; /* 增大触摸区域 */
+  }
+  
+  /* 移动端函数项布局优化 */
+  .function-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .function-checkbox {
+    grid-row: 1 / 3;
+    justify-self: start;
+  }
+  
+  .function-input {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  
+  .color-picker {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+  
+  .remove-button {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+  
+  /* 添加触摸反馈 */
+  .input-group button:active,
+  .example-buttons button:active,
+  .remove-button:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+  
+  /* 优化滚动条样式 */
+  .canvas-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .canvas-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .canvas-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .canvas-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 }

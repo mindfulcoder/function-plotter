@@ -22,8 +22,8 @@ const AxisControls: React.FC<AxisControlsProps> = ({
   setYRange
 }) => {
   return (
-    <>
-      <div className="input-group">
+    <div className="axis-controls">
+      <div className="input-group axis-group">
         <label htmlFor="xUnit">X轴单位长度:</label>
         <input
           type="text"
@@ -32,6 +32,9 @@ const AxisControls: React.FC<AxisControlsProps> = ({
           onChange={(e) => setXUnit(e.target.value)}
           placeholder="例如: 1, π/2, π/4, 0.5"
         />
+      </div>
+      
+      <div className="input-group axis-group">
         <label htmlFor="xRange">X轴范围 (±):</label>
         <input
           type="number"
@@ -43,7 +46,7 @@ const AxisControls: React.FC<AxisControlsProps> = ({
         />
       </div>
 
-      <div className="input-group">
+      <div className="input-group axis-group">
         <label htmlFor="yUnit">Y轴单位长度:</label>
         <input
           type="text"
@@ -52,6 +55,9 @@ const AxisControls: React.FC<AxisControlsProps> = ({
           onChange={(e) => setYUnit(e.target.value)}
           placeholder="例如: 1, π/2, π/4, 0.5"
         />
+      </div>
+      
+      <div className="input-group axis-group">
         <label htmlFor="yRange">Y轴范围 (±):</label>
         <input
           type="number"
@@ -62,7 +68,7 @@ const AxisControls: React.FC<AxisControlsProps> = ({
           step="0.1"
         />
       </div>
-    </>
+    </div>
   );
 };
 

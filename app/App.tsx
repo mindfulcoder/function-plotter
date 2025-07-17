@@ -1,5 +1,5 @@
 "use client"
-import React, {useState, useRef, useEffect, RefObject} from 'react';
+import React, { useState, useRef, useEffect, RefObject } from 'react';
 import FunctionInput from './components/FunctionInput';
 import AxisControls from './components/AxisControls';
 import FunctionList from './components/FunctionList';
@@ -29,7 +29,7 @@ interface Example {
 }
 
 const FunctionPlotter: React.FC = () => {
-    const canvasRef:RefObject<HTMLCanvasElement|null> = useRef<HTMLCanvasElement>(null);
+    const canvasRef: RefObject<HTMLCanvasElement | null> = useRef<HTMLCanvasElement>(null);
     const [functions, setFunctions] = useState<FunctionData[]>([
         { id: 1, expression: 'sin(x)', color: '#007bff', visible: true }
     ]);
@@ -43,9 +43,30 @@ const FunctionPlotter: React.FC = () => {
     // 预定义颜色
     const colors: string[] = ['#007bff', '#dc3545', '#28a745', '#ffc107', '#6f42c1', '#fd7e14', '#20c997', '#e83e8c'];
 
-    // 坐标系参数
-    const canvasWidth = 800;
-    const canvasHeight = 600;
+    // 动态计算画布尺寸
+    const getCanvasSize = () => {
+        // 检查是否在客户端环境
+        if (typeof window === 'undefined') {
+            return { width: 800, height: 600 }; // 服务端默认尺寸
+        }
+
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            const width = Math.min(window.innerWidth - 40, 600); // 减去padding
+            const height = Math.min(width * 0.75, 450); // 保持4:3比例
+            return { width, height };
+        }
+        return { width: 800, height: 600 };
+    };
+
+    const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
+    const canvasWidth = canvasSize.width;
+    const canvasHeight = canvasSize.height;
+
+    // 客户端初始化画布尺寸
+    useEffect(() => {
+        setCanvasSize(getCanvasSize());
+    }, []);
 
     const { parseUnit, evaluateFunction } = useMathParser();
 
@@ -97,9 +118,23 @@ const FunctionPlotter: React.FC = () => {
         setError(hasError ? errorMessage : '');
     };
 
+    // 监听窗口大小变化
+    useEffect(() => {
+        // 确保只在客户端环境中添加事件监听器
+        if (typeof window === 'undefined') return;
+
+        const handleResize = () => {
+            const newSize = getCanvasSize();
+            setCanvasSize(newSize);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     useEffect(() => {
         redraw();
-    }, [functions, xUnit, yUnit, xRange, yRange, redraw]);
+    }, [functions, xUnit, yUnit, xRange, yRange, canvasWidth, canvasHeight]);
 
     // 添加新函数
     const addFunction = (): void => {
