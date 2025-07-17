@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect, RefObject} from 'react';
 import FunctionInput from './components/FunctionInput';
 import AxisControls from './components/AxisControls';
 import FunctionList from './components/FunctionList';
@@ -29,7 +29,7 @@ interface Example {
 }
 
 const FunctionPlotter: React.FC = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const canvasRef:RefObject<HTMLCanvasElement|null> = useRef<HTMLCanvasElement>(null);
     const [functions, setFunctions] = useState<FunctionData[]>([
         { id: 1, expression: 'sin(x)', color: '#007bff', visible: true }
     ]);
@@ -99,7 +99,7 @@ const FunctionPlotter: React.FC = () => {
 
     useEffect(() => {
         redraw();
-    }, [functions, xUnit, yUnit, xRange, yRange]);
+    }, [functions, xUnit, yUnit, xRange, yRange, redraw]);
 
     // 添加新函数
     const addFunction = (): void => {

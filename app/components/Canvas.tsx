@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface CanvasProps {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
+  canvasRef: React.RefObject<HTMLCanvasElement|null>;
   width: number;
   height: number;
 }
